@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" />
 <style>
-/* ── Custom properties (light + dark) ──────────────────────────── */
 :root {
   --bg:         #ffffff;
   --bg-sec:     #f5f5f4;
@@ -40,54 +39,39 @@
   --new-bg: rgba(186,117,23,.18);  --new-fg: #FAC775;
   --soon-bg:rgba(24,95,165,.18);   --soon-fg:#85B7EB;
 }}
-
-/* ── Reset & base ───────────────────────────────────────────────── */
 *{ box-sizing:border-box; margin:0; padding:0 }
 body{ background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,sans-serif; font-size:16px; line-height:1.5 }
 .mono{ font-family:'JetBrains Mono',monospace }
-
-/* ── Layout ─────────────────────────────────────────────────────── */
 .app{ max-width:860px; margin:0 auto; padding:36px 24px 64px }
 @media(max-width:600px){ .app{ padding:20px 16px 48px } }
-
-/* ── Header ─────────────────────────────────────────────────────── */
 h1{ font-size:22px; font-weight:500; color:var(--text) }
 .header-sub{ font-size:13px; color:var(--text-sec); margin-top:3px; letter-spacing:.02em }
-
-/* ── Stats ──────────────────────────────────────────────────────── */
 .stats{ display:flex; gap:10px; margin:18px 0 24px; flex-wrap:wrap }
 .stat{ background:var(--bg-sec); border-radius:var(--radius); padding:10px 16px; min-width:72px }
 .stat-label{ font-size:11px; color:var(--text-sec); margin-bottom:1px }
 .stat-value{ font-size:22px; font-weight:500; color:var(--text) }
 .stat-value.accent{ color:var(--acc) }
-
-/* ── Controls ───────────────────────────────────────────────────── */
+.add-game{ background:var(--bg-sec); border:1px solid var(--border-sec); border-radius:var(--radius); padding:20px; margin-bottom:24px }
+.add-game-head{ display:flex; justify-content:space-between; gap:10px; align-items:flex-end; margin-bottom:14px }
+.add-game-note{ font-size:12px; color:var(--text-sec); margin-top:4px }
+.add-game-form{ display:grid; gap:14px }
+.add-game-row{ display:grid; grid-template-columns:1fr 1fr; gap:10px }
+@media(max-width:560px){ .add-game-row{ grid-template-columns:1fr } }
+.field label{ display:flex; flex-direction:column; gap:6px; font-size:12px; color:var(--text-sec) }
+.field input, .field select{ width:100%; padding:10px 12px; border:1px solid var(--border-sec); border-radius:var(--radius); background:var(--bg); color:var(--text); font-size:13px; font-family:inherit }
+.form-actions{ display:flex; gap:10px; align-items:center; flex-wrap:wrap }
+.form-button{ background:var(--acc); color:#fff; border:none; border-radius:var(--radius); padding:10px 16px; font-size:13px; font-weight:500; cursor:pointer }
+.form-button:disabled{ opacity:.5; cursor:default }
+.form-error{ color:#c0392b; font-size:13px }
 .controls{ display:flex; gap:8px; margin-bottom:28px; flex-wrap:wrap; align-items:center }
 .search-wrap{ position:relative; flex:1 1 180px }
-.search-wrap input{
-  width:100%; padding:7px 12px 7px 32px;
-  border:1px solid var(--border-sec); border-radius:var(--radius);
-  background:var(--bg); color:var(--text); font-size:13px; font-family:inherit;
-  outline:none; transition:border-color .15s
-}
+.search-wrap input{ width:100%; padding:7px 12px 7px 32px; border:1px solid var(--border-sec); border-radius:var(--radius); background:var(--bg); color:var(--text); font-size:13px; font-family:inherit; outline:none; transition:border-color .15s }
 .search-wrap input:focus{ border-color:var(--acc) }
 .search-icon{ position:absolute; left:9px; top:50%; transform:translateY(-50%); color:var(--text-sec); font-size:16px; pointer-events:none }
 .filter-group{ display:flex; gap:4px; flex-wrap:wrap }
-.filter-group button{
-  background:transparent; border:1px solid var(--border-sec);
-  border-radius:var(--radius); color:var(--text-sec);
-  padding:6px 12px; font-size:11px; font-weight:500;
-  font-family:'JetBrains Mono',monospace; cursor:pointer;
-  letter-spacing:.03em; transition:border-color .15s, color .15s
-}
+.filter-group button{ background:transparent; border:1px solid var(--border-sec); border-radius:var(--radius); color:var(--text-sec); padding:6px 12px; font-size:11px; font-weight:500; font-family:'JetBrains Mono',monospace; cursor:pointer; letter-spacing:.03em; transition:border-color .15s, color .15s }
 .filter-group button:hover{ color:var(--text) }
-
-/* ── Year section ───────────────────────────────────────────────── */
-.year-header{
-  display:flex; align-items:center; gap:10px;
-  cursor:pointer; user-select:none;
-  margin-bottom:5px; padding:3px 0
-}
+.year-header{ display:flex; align-items:center; gap:10px; cursor:pointer; user-select:none; margin-bottom:5px; padding:3px 0 }
 .year-header:hover .year-num{ color:var(--text) }
 .year-num{ font-size:26px; font-weight:500; color:var(--text-sec); line-height:1; transition:color .15s }
 .year-meta{ font-size:11px; color:var(--text-sec) }
@@ -95,45 +79,29 @@ h1{ font-size:22px; font-weight:500; color:var(--text) }
 .year-toggle{ font-size:11px; color:var(--text-sec) }
 .year-bar{ height:2px; background:var(--border); border-radius:1px; margin-bottom:8px; overflow:hidden }
 .year-bar-fill{ height:100%; background:var(--acc); border-radius:1px; transition:width .3s }
-
-/* ── Game grid ──────────────────────────────────────────────────── */
 .game-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px 10px; margin-bottom:30px }
 @media(max-width:560px){ .game-grid{ grid-template-columns:minmax(0,1fr) } }
-
-/* ── Game row ───────────────────────────────────────────────────── */
-.game-row{
-  display:flex; align-items:center; gap:7px;
-  padding:6px 8px; border-radius:var(--radius);
-  cursor:pointer; transition:background .1s
-}
+.game-row{ display:flex; align-items:center; gap:7px; padding:6px 8px; border-radius:var(--radius); cursor:pointer; transition:background .1s }
 .game-row:hover{ background:var(--bg-sec) }
 .game-row.played{ background:var(--bg-played) }
 .game-row.dim{ opacity:.40 }
 .game-row.soon{ opacity:.72 }
-
 .dot{ width:7px; height:7px; border-radius:50%; flex-shrink:0; border:1px solid var(--border-sec); transition:all .15s }
 .game-row.played .dot{ background:var(--acc); border-color:var(--acc) }
-
 .badge{ font-size:11px; font-weight:500; font-family:'JetBrains Mono',monospace; padding:1px 6px; border-radius:4px; flex-shrink:0; letter-spacing:.03em }
-.badge-ps       { background:var(--ps-bg);  color:var(--ps-fg)  }
-.badge-nintendo { background:var(--ns-bg);  color:var(--ns-fg)  }
-.badge-multi    { background:var(--pc-bg);  color:var(--pc-fg)  }
-
+.badge-ps{ background:var(--ps-bg); color:var(--ps-fg) }
+.badge-nintendo{ background:var(--ns-bg); color:var(--ns-fg) }
+.badge-multi{ background:var(--pc-bg); color:var(--pc-fg) }
 .game-title{ flex:1; font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0 }
 .game-row.played .game-title{ color:var(--text-sec); text-decoration:line-through; text-decoration-color:var(--border-sec) }
-
 .pill{ font-size:11px; font-weight:500; font-family:'JetBrains Mono',monospace; padding:1px 5px; border-radius:4px; flex-shrink:0 }
-.pill-new { background:var(--new-bg);  color:var(--new-fg)  }
+.pill-new{ background:var(--new-bg); color:var(--new-fg) }
 .pill-soon{ background:var(--soon-bg); color:var(--soon-fg) }
-
 .stars{ display:flex; flex-shrink:0 }
 .star{ font-size:13px; cursor:pointer; color:var(--border-sec); line-height:1; transition:color .1s }
 .star.lit{ color:var(--acc) }
-
 .game-date{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-sec); flex-shrink:0; min-width:34px; text-align:right }
 .game-row.soon .game-date{ color:var(--soon-fg) }
-
-/* ── States ─────────────────────────────────────────────────────── */
 .loading{ display:flex; align-items:center; justify-content:center; min-height:40vh }
 .loading-text{ font-size:14px; color:var(--text-sec) }
 .error-state{ padding:48px 24px; text-align:center }
@@ -142,413 +110,13 @@ h1{ font-size:22px; font-weight:500; color:var(--text) }
 .error-state code{ background:var(--bg-sec); padding:2px 6px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:13px }
 .error-detail{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-sec) }
 .no-results{ text-align:center; padding:48px; color:var(--text-sec); font-size:14px }
-
-/* ── Footer ─────────────────────────────────────────────────────── */
-.app-footer{
-  display:flex; justify-content:space-between; flex-wrap:wrap; gap:4px;
-  padding-top:14px; border-top:.5px solid var(--border);
-  font-size:11px; color:var(--text-sec);
-  font-family:'JetBrains Mono',monospace; margin-top:8px
-}
-
-/* ── API indicator ──────────────────────────────────────────────── */
+.app-footer{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:4px; padding-top:14px; border-top:.5px solid var(--border); font-size:11px; color:var(--text-sec); font-family:'JetBrains Mono',monospace; margin-top:8px }
 .save-err{ position:fixed; bottom:16px; right:16px; background:#c0392b; color:#fff; padding:8px 14px; border-radius:var(--radius); font-size:12px; font-family:'JetBrains Mono',monospace; pointer-events:none; opacity:0; transition:opacity .2s }
 .save-err.visible{ opacity:1 }
 </style>
 </head>
 <body>
 <div id="root"></div>
-
-<script type="module">
-import { useState, useEffect, useCallback, useMemo } from 'https://esm.sh/react@18';
-import { createRoot }                                from 'https://esm.sh/react-dom@18/client';
-import htm                                           from 'https://esm.sh/htm@3';
-
-const html = htm.bind(
-  (await import('https://esm.sh/react@18')).createElement
-);
-
-// ─── Static game data ─────────────────────────────────────────────────────────
-const TODAY = new Date('2026-05-09');
-
-function computeStatus(rel) {
-  if (!rel) return 'released';
-  const d = new Date(rel), days = (d - TODAY) / 86400000;
-  if (days > 30)  return 'upcoming';
-  if (days > 0)   return 'soon';
-  return -days <= 30 ? 'new' : 'released';
-}
-
-const RAW = [
-  {id:1,yr:2020,t:"Doom Eternal",d:"Mar 20",p:"multi"},
-  {id:2,yr:2020,t:"The Last of Us Part II",d:"Jun 19",p:"ps"},
-  {id:3,yr:2020,t:"Ghost of Tsushima",d:"Jul 17",p:"ps"},
-  {id:4,yr:2020,t:"Demon's Souls",d:"Nov 12",p:"ps"},
-  {id:5,yr:2020,t:"Marvel's Spider-Man: Miles Morales",d:"Nov 12",p:"ps"},
-  {id:6,yr:2020,t:"Call of Duty: Black Ops Cold War",d:"Nov 12",p:"multi"},
-  {id:7,yr:2020,t:"Cyberpunk 2077",d:"Dec 10",p:"multi"},
-  {id:8,yr:2021,t:"Returnal",d:"Apr 30",p:"ps"},
-  {id:9,yr:2021,t:"Ratchet & Clank: Rift Apart",d:"Jun 11",p:"ps"},
-  {id:10,yr:2021,t:"Scarlet Nexus",d:"Jun 25",p:"multi"},
-  {id:11,yr:2021,t:"Far Cry 6",d:"Oct 07",p:"multi"},
-  {id:12,yr:2021,t:"Call of Duty: Vanguard",d:"Nov 05",p:"multi"},
-  {id:13,yr:2021,t:"Battlefield 2042",d:"Nov 19",p:"multi"},
-  {id:14,yr:2021,t:"Halo Infinite",d:"Dec 08",p:"multi"},
-  {id:15,yr:2022,t:"Dying Light 2",d:"Feb 04",p:"multi"},
-  {id:16,yr:2022,t:"Horizon Forbidden West",d:"Feb 18",p:"ps"},
-  {id:17,yr:2022,t:"Elden Ring",d:"Feb 25",p:"multi"},
-  {id:18,yr:2022,t:"Gran Turismo 7",d:"Mar 04",p:"ps"},
-  {id:19,yr:2022,t:"Call of Duty: Modern Warfare II",d:"Oct 28",p:"multi"},
-  {id:20,yr:2022,t:"God of War Ragnarök",d:"Nov 09",p:"ps"},
-  {id:21,yr:2023,t:"Dead Space",d:"Jan 27",p:"multi"},
-  {id:22,yr:2023,t:"Hogwarts Legacy",d:"Feb 10",p:"multi"},
-  {id:23,yr:2023,t:"Company of Heroes 3",d:"Feb 23",p:"multi"},
-  {id:24,yr:2023,t:"Resident Evil 4 Remake",d:"Mar 24",p:"multi"},
-  {id:25,yr:2023,t:"HFW: Burning Shores",d:"Apr 19",p:"ps"},
-  {id:26,yr:2023,t:"Star Wars Jedi: Survivor",d:"Apr 28",p:"multi"},
-  {id:27,yr:2023,t:"Diablo IV",d:"Jun 06",p:"multi"},
-  {id:28,yr:2023,t:"Final Fantasy XVI",d:"Jun 22",p:"ps"},
-  {id:29,yr:2023,t:"Baldur's Gate 3",d:"Aug 03",p:"multi"},
-  {id:30,yr:2023,t:"Starfield",d:"Sep 06",p:"multi"},
-  {id:31,yr:2023,t:"Marvel's Spider-Man 2",d:"Oct 20",p:"ps"},
-  {id:32,yr:2023,t:"Alan Wake II",d:"Oct 27",p:"multi"},
-  {id:33,yr:2023,t:"Call of Duty: Modern Warfare III",d:"Nov 10",p:"multi"},
-  {id:34,yr:2024,t:"Persona 3 Reload",d:"Feb 02",p:"multi"},
-  {id:35,yr:2024,t:"Helldivers 2",d:"Feb 08",p:"multi"},
-  {id:36,yr:2024,t:"Rise of the Ronin",d:"Mar 22",p:"ps"},
-  {id:37,yr:2024,t:"Stellar Blade",d:"Apr 26",p:"ps"},
-  {id:38,yr:2024,t:"Destiny 2: The Final Shape",d:"Jun 04",p:"multi"},
-  {id:39,yr:2024,t:"Elden Ring: Shadow of the Erdtree",d:"Jun 21",p:"multi"},
-  {id:40,yr:2024,t:"Luigi's Mansion 2",d:"Jun 27",p:"nintendo"},
-  {id:41,yr:2024,t:"Astro Bot",d:"Sep 06",p:"ps"},
-  {id:42,yr:2024,t:"Space Marine 2",d:"Sep 09",p:"multi"},
-  {id:43,yr:2024,t:"Diablo IV: Vessel of Hatred",d:"Oct 08",p:"multi"},
-  {id:44,yr:2024,t:"Call of Duty: Black Ops 6",d:"Oct 25",p:"multi"},
-  {id:45,yr:2024,t:"Indiana Jones and the Great Circle",d:"Dec 08",p:"multi"},
-  {id:46,yr:2025,t:"Monster Hunter Wilds",d:"Feb 28",p:"multi"},
-  {id:47,yr:2025,t:"Atomfall",d:"Mar 27",p:"multi"},
-  {id:48,yr:2025,t:"TES IV: Oblivion Remastered",d:"Apr 22",p:"multi"},
-  {id:49,yr:2025,t:"Clair Obscur: Expedition 33",d:"Apr 24",p:"multi"},
-  {id:50,yr:2025,t:"Doom: The Dark Ages",d:"May 15",p:"multi"},
-  {id:51,yr:2025,t:"Mario Kart World",d:"Jun 05",p:"nintendo"},
-  {id:52,yr:2025,t:"Death Stranding 2: On the Beach",d:"Jun 26",p:"ps"},
-  {id:53,yr:2025,t:"Donkey Kong Bonanza",d:"Jul 17",p:"nintendo"},
-  {id:54,yr:2025,t:"Mafia: The Old Country",d:"Aug 08",p:"multi"},
-  {id:55,yr:2025,t:"Metal Gear Solid: Snake Eater",d:"Aug 28",p:"multi"},
-  {id:56,yr:2025,t:"Ghost of Yotei",d:"Oct 02",p:"ps"},
-  {id:57,yr:2025,t:"Super Mario Galaxy",d:"Oct 02",p:"nintendo"},
-  {id:58,yr:2025,t:"Battlefield 6",d:"Oct 10",p:"multi"},
-  {id:59,yr:2025,t:"Pokémon Legends: Z-A",d:"Oct 16",p:"nintendo"},
-  {id:60,yr:2025,t:"Metroid Prime 4",d:"Dec 04",p:"nintendo"},
-  {id:61,yr:2026,t:"Resident Evil Requiem",d:"Feb 27",p:"multi",rel:"2026-02-27"},
-  {id:62,yr:2026,t:"Toxic Commando",d:"Mar 12",p:"multi",rel:"2026-03-12"},
-  {id:63,yr:2026,t:"Crimson Desert",d:"Mar 19",p:"multi",rel:"2026-03-19"},
-  {id:64,yr:2026,t:"Mouse: P.I. for Hire",d:"Apr 16",p:"multi",rel:"2026-04-16"},
-  {id:65,yr:2026,t:"Diablo IV: Lord of Hatred",d:"Apr 28",p:"multi",rel:"2026-04-28"},
-  {id:66,yr:2026,t:"Mixtape",d:"May 07",p:"multi",rel:"2026-05-07"},
-  {id:67,yr:2026,t:"Directive 8020",d:"May 12",p:"ps",rel:"2026-05-12"},
-  {id:68,yr:2026,t:"Forza Horizon 6",d:"May 15",p:"multi",rel:"2026-05-15"},
-  {id:69,yr:2026,t:"Lego Batman",d:"May 22",p:"multi",rel:"2026-05-22"},
-  {id:70,yr:2026,t:"007 First Light",d:"May 27",p:"multi",rel:"2026-05-27"},
-  {id:71,yr:2026,t:"Star Fox",d:"Jun 25",p:"nintendo",rel:"2026-06-25"},
-  {id:72,yr:2026,t:"Assassin's Creed: Black Flag",d:"Jul 09",p:"multi",rel:"2026-07-09"},
-  {id:73,yr:2026,t:"Splatoon Raiders",d:"Jul 23",p:"nintendo",rel:"2026-07-23"},
-  {id:74,yr:2026,t:"Beast of Reincarnation",d:"Aug 04",p:"multi",rel:"2026-08-04"},
-  {id:75,yr:2026,t:"Phantom Blade Zero",d:"Sep 09",p:"multi",rel:"2026-09-09"},
-  {id:76,yr:2026,t:"Marvel's Wolverine",d:"Sep 15",p:"ps",rel:"2026-09-15"},
-  {id:77,yr:2026,t:"Grand Theft Auto VI",d:"Nov 19",p:"multi",rel:"2026-11-19"},
-];
-
-const GAMES = RAW.map(g => ({
-  ...g,
-  status:   computeStatus(g.rel),
-  released: !g.rel || new Date(g.rel) <= TODAY,
-}));
-
-const PL_LABEL = { multi: 'PC+', ps: 'PS', nintendo: 'NS' };
-
-// ─── API layer ────────────────────────────────────────────────────────────────
-const api = {
-  state: () =>
-    fetch('/api/state').then(r => {
-      if (!r.ok) throw new Error(`GET /api/state → ${r.status}`);
-      return r.json();
-    }),
-
-  update: (id, gs) =>
-    fetch(`/api/games/${id}`, {
-      method:  'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(gs),
-    }).then(r => {
-      if (!r.ok) throw new Error(`PUT /api/games/${id} → ${r.status}`);
-      return r.json();
-    }),
-};
-
-// ─── Components ───────────────────────────────────────────────────────────────
-
-function StatCard({ label, value, accent }) {
-  return html`
-    <div class="stat">
-      <div class="stat-label">${label}</div>
-      <div class="stat-value mono ${accent ? 'accent' : ''}">${value ?? '—'}</div>
-    </div>
-  `;
-}
-
-function FilterGroup({ options, value, accentVar, onChange }) {
-  return html`
-    <div class="filter-group">
-      ${options.map(opt => html`
-        <button
-          key=${opt.value}
-          onClick=${() => onChange(opt.value)}
-          style=${value === opt.value
-            ? { borderColor: `var(${accentVar})`, color: `var(${accentVar})` }
-            : {}}
-        >${opt.label}</button>
-      `)}
-    </div>
-  `;
-}
-
-function Stars({ id, rating, onRate }) {
-  return html`
-    <span class="stars" onClick=${e => e.stopPropagation()}>
-      ${[1,2,3,4,5].map(s => html`
-        <span
-          key=${s}
-          class=${'star' + (s <= rating ? ' lit' : '')}
-          onClick=${() => onRate(id, s === rating ? 0 : s)}
-        >★</span>
-      `)}
-    </span>
-  `;
-}
-
-function GameRow({ game, data = {}, onToggle, onRate }) {
-  const cls = [
-    'game-row',
-    data.played             ? 'played' : '',
-    game.status === 'soon'  ? 'soon'   : !game.released ? 'dim' : '',
-  ].filter(Boolean).join(' ');
-
-  return html`
-    <div class=${cls} onClick=${() => onToggle(game.id)}>
-      <div class="dot" />
-      <span class=${'badge badge-' + game.p}>${PL_LABEL[game.p]}</span>
-      <span class="game-title">${game.t}</span>
-      ${game.status === 'new'  && html`<span class="pill pill-new">new</span>`}
-      ${game.status === 'soon' && html`<span class="pill pill-soon">soon</span>`}
-      ${data.played && html`<${Stars} id=${game.id} rating=${data.rating || 0} onRate=${onRate} />`}
-      <span class=${'game-date mono' + (game.status === 'soon' ? ' soon-date' : '')}>${game.d}</span>
-    </div>
-  `;
-}
-
-function YearSection({ year, games, gameData, onToggle, onRate, isCollapsed, onCollapse }) {
-  const played = games.filter(g => gameData[g.id]?.played).length;
-  const pct    = games.length > 0 ? Math.round(played / games.length * 100) : 0;
-  const meta   = `${games.length} titles${played > 0 ? ` · ${played}/${games.length} played` : ''}`;
-
-  return html`
-    <div>
-      <div class="year-header" onClick=${() => onCollapse(year)}>
-        <span class="year-num mono">${year}</span>
-        <span class="year-meta mono">${meta}</span>
-        <div class="year-line" />
-        <span class="year-toggle">${isCollapsed ? '▸' : '▾'}</span>
-      </div>
-
-      ${played > 0 && !isCollapsed && html`
-        <div class="year-bar">
-          <div class="year-bar-fill" style=${{ width: pct + '%' }} />
-        </div>
-      `}
-
-      ${!isCollapsed && html`
-        <div class="game-grid">
-          ${games.map(g => html`
-            <${GameRow}
-              key=${g.id}
-              game=${g}
-              data=${gameData[String(g.id)]}
-              onToggle=${onToggle}
-              onRate=${onRate}
-            />
-          `)}
-        </div>
-      `}
-    </div>
-  `;
-}
-
-// ─── App ──────────────────────────────────────────────────────────────────────
-function App() {
-  const [gameData,     setGameData]     = useState({});
-  const [loading,      setLoading]      = useState(true);
-  const [initError,    setInitError]    = useState(null);
-  const [saveErr,      setSaveErr]      = useState(false);
-  const [search,       setSearch]       = useState('');
-  const [platform,     setPlatform]     = useState('all');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [collapsed,    setCollapsed]    = useState({});
-
-  // Initial load from API
-  useEffect(() => {
-    api.state()
-      .then(data => { setGameData(data || {}); setLoading(false); })
-      .catch(err  => { setInitError(err.message); setLoading(false); });
-  }, []);
-
-  // Optimistic toggle played — revert on API failure
-  const togglePlayed = useCallback(async (id) => {
-    const key     = String(id);
-    const current = gameData[key] || {};
-    const next    = { ...current, played: !current.played };
-    setGameData(prev => ({ ...prev, [key]: next }));
-    try {
-      await api.update(id, next);
-    } catch {
-      setGameData(prev => ({ ...prev, [key]: current }));
-      flashSaveErr();
-    }
-  }, [gameData]);
-
-  // Optimistic rating update — revert on API failure
-  const setRating = useCallback(async (id, rating) => {
-    const key     = String(id);
-    const current = gameData[key] || {};
-    const next    = { ...current, rating };
-    setGameData(prev => ({ ...prev, [key]: next }));
-    try {
-      await api.update(id, next);
-    } catch {
-      setGameData(prev => ({ ...prev, [key]: current }));
-      flashSaveErr();
-    }
-  }, [gameData]);
-
-  const toggleCollapse = useCallback((year) => {
-    setCollapsed(prev => ({ ...prev, [year]: !prev[year] }));
-  }, []);
-
-  // Brief error toast on API write failure
-  const flashSaveErr = () => {
-    setSaveErr(true);
-    setTimeout(() => setSaveErr(false), 2500);
-  };
-
-  // Derived / filtered data
-  const filtered = useMemo(() => GAMES.filter(g => {
-    if (search       && !g.t.toLowerCase().includes(search.toLowerCase())) return false;
-    if (platform !== 'all' && g.p !== platform)                            return false;
-    if (statusFilter === 'released' && !g.released)                        return false;
-    if (statusFilter === 'upcoming' &&  g.released)                        return false;
-    return true;
-  }), [search, platform, statusFilter]);
-
-  const years        = useMemo(() => [...new Set(filtered.map(g => g.yr))].sort((a,b) => a - b), [filtered]);
-  const totalPlayed  = useMemo(() => Object.values(gameData).filter(d => d.played).length, [gameData]);
-  const totalRel     = useMemo(() => GAMES.filter(g =>  g.released).length, []);
-  const totalUp      = useMemo(() => GAMES.filter(g => !g.released).length, []);
-
-  // ── Render states ──────────────────────────────────────────────
-  if (loading) return html`
-    <div class="loading">
-      <span class="loading-text mono">Loading…</span>
-    </div>
-  `;
-
-  if (initError) return html`
-    <div class="error-state">
-      <h2>Cannot connect to API</h2>
-      <p>Make sure the Go server is running:</p>
-      <p><code>go run .</code></p>
-      <p class="error-detail">${initError}</p>
-    </div>
-  `;
-
-  // ── Main render ────────────────────────────────────────────────
-  return html`
-    <div class="app">
-      <header>
-        <h1>Game log</h1>
-        <p class="header-sub mono">2020 – 2026 · PlayStation · Nintendo · Multi-platform</p>
-      </header>
-
-      <div class="stats">
-        <${StatCard} label="Total"    value=${GAMES.length} />
-        <${StatCard} label="Released" value=${totalRel}     />
-        <${StatCard} label="Upcoming" value=${totalUp}      />
-        <${StatCard} label="Played"   value=${totalPlayed} accent />
-      </div>
-
-      <div class="controls">
-        <div class="search-wrap">
-          <i class="ti ti-search search-icon" aria-hidden="true" />
-          <input
-            type="text"
-            placeholder="Search titles…"
-            value=${search}
-            onInput=${e => setSearch(e.target.value)}
-          />
-        </div>
-        <${FilterGroup}
-          options=${[
-            { value:'all',      label:'All'           },
-            { value:'ps',       label:'PlayStation'   },
-            { value:'nintendo', label:'Nintendo'      },
-            { value:'multi',    label:'Multi-platform'},
-          ]}
-          value=${platform}
-          accentVar="--acc"
-          onChange=${setPlatform}
-        />
-        <${FilterGroup}
-          options=${[
-            { value:'all',      label:'All'      },
-            { value:'released', label:'Released' },
-            { value:'upcoming', label:'Upcoming' },
-          ]}
-          value=${statusFilter}
-          accentVar="--soon-fg"
-          onChange=${setStatusFilter}
-        />
-      </div>
-
-      <main>
-        ${filtered.length === 0
-          ? html`<div class="no-results">No results</div>`
-          : years.map(yr => html`
-              <${YearSection}
-                key=${yr}
-                year=${yr}
-                games=${filtered.filter(g => g.yr === yr)}
-                gameData=${gameData}
-                onToggle=${togglePlayed}
-                onRate=${setRating}
-                isCollapsed=${!!collapsed[yr]}
-                onCollapse=${toggleCollapse}
-              />
-            `)
-        }
-      </main>
-
-      <footer class="app-footer mono">
-        <span>Click a title to mark played · stars to rate · year to collapse</span>
-        <span>${totalPlayed}/${GAMES.length} played</span>
-      </footer>
-
-      <div class=${'save-err' + (saveErr ? ' visible' : '')}>
-        Save failed — check server
-      </div>
-    </div>
-  `;
-}
-
-createRoot(document.getElementById('root')).render(html`<${App} />`);
-</script>
+<script type="module" src="./app.js"></script>
 </body>
 </html>
