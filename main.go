@@ -18,20 +18,36 @@ import (
 	"os"
 )
 
+var (
+	defaultStatePath = "state.json"
+	listenAndServe   = http.ListenAndServe
+	exitFunc         = os.Exit
+	staticFS         fs.FS
+)
+
 //go:embed static
 var staticFiles embed.FS
 
 func main() {
-	db, err := newStore("state.json")
+	if err := run(defaultStatePath, ":8080", listenAndServe); err != nil {
+		exitFunc(1)
+	}
+}
+
+func run(statePath, addr string, serveFn func(string, http.Handler) error) error {
+	db, err := newStore(statePath)
 	if err != nil {
 		slog.Error("store init failed", "err", err)
-		os.Exit(1)
+		return err
 	}
 
-	sub, err := fs.Sub(staticFiles, "static")
-	if err != nil {
+	if staticFS == nil {
+		staticFS = staticFiles
+	}
+	sub, _ := fs.Sub(staticFS, "static")
+	if _, err := fs.Stat(sub, "."); err != nil {
 		slog.Error("embed.Sub", "err", err)
-		os.Exit(1)
+		return err
 	}
 	static := http.FileServer(http.FS(sub))
 
@@ -44,12 +60,12 @@ func main() {
 	})
 	mux.Handle("/", static)
 
-	addr := ":8080"
 	slog.Info("game log ready", "url", "http://localhost"+addr)
-	if err := http.ListenAndServe(addr, cors(mux)); err != nil {
+	if err := serveFn(addr, cors(mux)); err != nil {
 		slog.Error("server error", "err", err)
-		os.Exit(1)
+		return err
 	}
+	return nil
 }
 
 func cors(next http.Handler) http.Handler {

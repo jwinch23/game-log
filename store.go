@@ -10,6 +10,8 @@ import (
 
 const defaultNextID = 1000
 
+var jsonMarshalIndent = json.MarshalIndent
+
 type store struct {
 	mu          sync.RWMutex
 	path        string
@@ -128,7 +130,7 @@ func (s *store) flushLocked() error {
 		NextID: s.nextID,
 	}
 
-	b, err := json.MarshalIndent(data, "", "  ")
+	b, err := jsonMarshalIndent(data, "", "  ")
 	if err != nil {
 		return err
 	}
