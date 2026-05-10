@@ -1,0 +1,204 @@
+openapi: 3.0.3
+info:
+  title: game-log API
+  version: 1.0.0
+  description: Personal game tracker HTTP API for state management, game creation, and game updates.
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/state:
+    get:
+      summary: Retrieve current game state and custom games
+      operationId: getState
+      responses:
+        '200':
+          description: Current state and game list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StateResponse'
+  /api/games:
+    post:
+      summary: Create a new custom game entry
+      operationId: createGame
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameCreateRequest'
+      responses:
+        '201':
+          description: Created game
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+        '400':
+          description: Invalid request payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error persisting game
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/games/{id}:
+    put:
+      summary: Update the play state of an existing game
+      operationId: updateGame
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Numeric ID of the game to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameState'
+      responses:
+        '200':
+          description: Updated game state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameState'
+        '400':
+          description: Invalid game ID or invalid request payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error persisting state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /healthz:
+    get:
+      summary: Health check endpoint
+      operationId: getHealth
+      responses:
+        '200':
+          description: Server health status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+components:
+  schemas:
+    GameState:
+      type: object
+      properties:
+        played:
+          type: boolean
+          description: Whether the game has been played
+          example: true
+        rating:
+          type: integer
+          description: User rating from 0 to 5
+          minimum: 0
+          maximum: 5
+          example: 4
+      required:
+        - played
+        - rating
+    Game:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 123
+        yr:
+          type: integer
+          description: Release year
+          example: 2024
+        t:
+          type: string
+          description: Game title
+          example: "The Legend of Copilot"
+        d:
+          type: string
+          description: Display date string
+          example: "2024"
+        p:
+          type: string
+          description: Platform code
+          enum:
+            - ps
+            - nintendo
+            - multi
+          example: ps
+        rel:
+          type: string
+          description: Optional release date in YYYY-MM-DD format
+          example: "2024-11-05"
+      required:
+        - id
+        - yr
+        - t
+        - d
+        - p
+    GameCreateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "New Game"
+        year:
+          type: integer
+          example: 2025
+        platform:
+          type: string
+          enum:
+            - ps
+            - nintendo
+            - multi
+          example: multi
+        date:
+          type: string
+          description: Display date string
+          example: "2025"
+        rel:
+          type: string
+          description: Optional release date in YYYY-MM-DD format
+          example: "2025-09-15"
+      required:
+        - title
+        - year
+        - platform
+        - date
+    StateResponse:
+      type: object
+      properties:
+        state:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/GameState'
+        games:
+          type: array
+          items:
+            $ref: '#/components/schemas/Game'
+      required:
+        - state
+        - games
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "invalid JSON body"
+      required:
+        - error
